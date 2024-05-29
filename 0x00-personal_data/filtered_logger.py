@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import logging
+import os
 import re
+import mysql.connector
+from mysql.connector.connection import MySQLConnection
 """
 Log message obfuscated to protect personal data
 """
@@ -50,3 +53,40 @@ def get_logger() -> logging.Logger:
     logger.addHandler(handler)
 
     return logger
+
+def get_db() -> MySQLConnection:
+    """Returns a connector to the database."""
+    username = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
+    host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+    database = os.getenv('PERSONAL_DATA_DB_NAME')
+
+    return mysql.connector.connect(
+        user=username,
+        password=password,
+        host=host,
+        database=database
+    )
+
+def main():
+    """
+    retrieve all rows in the users table and display
+    each row under a filtered format
+    """
+    logger = get_logger()
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute("SELECT * FROM users")
+    rows = cursor.fetchall()
+    columns = cursor.column_names
+
+    for row in rows:
+        message = '; '.join(f"{col}={val}" for col, val in zip(columns, row)) + ";"
+        logger.info(message)
+
+    cursor.close()
+    db.close()
+
+if __name__ == "__main__":
+    main()
