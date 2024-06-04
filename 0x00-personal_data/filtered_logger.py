@@ -54,6 +54,7 @@ def get_logger() -> logging.Logger:
 
     return logger
 
+
 def get_db() -> MySQLConnection:
     """Returns a connector to the database."""
     username = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
@@ -67,6 +68,7 @@ def get_db() -> MySQLConnection:
         host=host,
         database=database
     )
+
 
 def main():
     """
@@ -82,11 +84,13 @@ def main():
     columns = cursor.column_names
 
     for row in rows:
-        message = '; '.join(f"{col}={val}" for col, val in zip(columns, row)) + ";"
+        message = '; '.join(f"{col}={val}" for col,
+                            val in zip(columns, row)) + ";"
         logger.info(message)
 
     cursor.close()
     db.close()
+
 
 if __name__ == "__main__":
     main()
