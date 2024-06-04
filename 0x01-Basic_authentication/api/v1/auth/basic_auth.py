@@ -87,7 +87,8 @@ class BasicAuth(Auth):
             request (object, optional): The request object (default: None).
 
         Returns:
-            TypeVar('User'): The User instance if authenticated, otherwise None.
+            TypeVar('User'): The User instance if authenticated,
+            otherwise None.
         """
 
         if request is None:
