@@ -11,9 +11,10 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base, User
 
+
 class DB:
     """DB class"""
-    
+
     def __init__(self) -> None:
         """Initialize a new DB instance"""
         self._engine = create_engine("sqlite:///a.db", echo=True)
