@@ -1,5 +1,8 @@
+#!/usr/bin/env python3
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 from user import Base, User
 
 
@@ -47,7 +50,6 @@ class DB:
     def update_user(self, user_id: int, **kwargs) -> None:
         """Update a user
         """
-        from sqlalchemy.exc import NoResultFound
         user = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
             if hasattr(user, key):
