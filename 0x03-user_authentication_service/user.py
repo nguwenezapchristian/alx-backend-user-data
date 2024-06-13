@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+Main file
+"""
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -7,14 +10,7 @@ Base = declarative_base()
 
 class User(Base):
     """
-    Represents a user in the system.
-
-    Attributes:
-    - id (int): The unique identifier for the user.
-    - email (str): The email address of the user.
-    - hashed_password (str): The hashed password of the user.
-    - session_id (str): The session ID of the user (if logged in).
-    - reset_token (str): The reset token for the user (if resetting password).
+    User model for the users table
     """
     __tablename__ = 'users'
 
