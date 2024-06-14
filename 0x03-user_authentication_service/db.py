@@ -17,7 +17,7 @@ class DB:
 
     def __init__(self) -> None:
         """Initialize a new DB instance"""
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db")
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -32,15 +32,16 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> User:
         """Add a user to the database"""
-        user = User(email=email, hashed_password=hashed_password)
+        user = User()
+        user.email = email
+        user.hashed_password = hashed_password
         self._session.add(user)
         self._session.commit()
         return user
 
     def find_user_by(self, **kwargs) -> User:
         """Find a user by arbitrary keyword arguments"""
-        session = self._session
-        query = session.query(User)
+        query = self._session.query(User)
         for key, value in kwargs.items():
             if not hasattr(User, key):
                 raise InvalidRequestError(f"Invalid attribute {key}")
