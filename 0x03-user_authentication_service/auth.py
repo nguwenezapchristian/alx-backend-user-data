@@ -1,10 +1,9 @@
 from db import DB
 from user import User
 from bcrypt import gensalt, hashpw
-from sqlalchemy.orm.exc import NoResultFound
 
 
-def _hash_password(self, password: str) -> bytes:
+def _hash_password(password: str) -> bytes:
     """Hash a password for storing."""
     return hashpw(password.encode(), gensalt())
 
