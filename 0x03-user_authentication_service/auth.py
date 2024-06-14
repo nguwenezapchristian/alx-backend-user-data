@@ -5,8 +5,8 @@ from sqlalchemy.orm.exc import NoResultFound
 
 
 def _hash_password(self, password: str) -> bytes:
-        """Hash a password for storing."""
-        return hashpw(password.encode(), gensalt())
+    """Hash a password for storing."""
+    return hashpw(password.encode(), gensalt())
 
 
 class Auth:
