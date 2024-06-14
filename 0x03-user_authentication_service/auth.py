@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ Auth module
 """
+import uuid
 from db import DB
 from user import User
 from bcrypt import gensalt, hashpw, checkpw
@@ -37,3 +38,7 @@ class Auth:
             return checkpw(password.encode('utf-8'), user.hashed_password)
         except NoResultFound:
             return False
+
+    def _generate_uuid(self) -> str:
+        """Generate a new UUID."""
+        return str(uuid.uuid4())
