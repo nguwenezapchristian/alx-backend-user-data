@@ -42,9 +42,9 @@ def forbidden(error) -> str:
     return jsonify({"error": "Forbidden"}), 403
 
 
-@app.before_request
+@@app.before_request
 def before_request_handler():
-    """ handler for before_request."""
+    """Handler for before_request."""
     if auth is None:
         return
 
@@ -52,14 +52,15 @@ def before_request_handler():
                       '/api/v1/unauthorized/',
                       '/api/v1/forbidden/']
 
-    if request.path not in excluded_paths:
-        if not auth.require_auth(request.path, excluded_paths):
-            return
-        if auth.authorization_header(request) is None:
-            return abort(401)
-        # if auth.current_user(request) is None:
-        #     return abort(403)
-        request.current_user = auth.current_user(request)
+    if not auth.require_auth(request.path, excluded_paths):
+        return
+    if auth.authorization_header(request) is None:
+        return abort(401)
+    user = auth.current_user(request)
+    if user is None:
+        return abort(403)
+    request.current_user = user
+
 
 
 if __name__ == "__main__":
