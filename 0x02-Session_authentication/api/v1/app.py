@@ -1,8 +1,11 @@
+#!/usr/bin/env python3
+""" Module of the API """
 from flask import Flask, jsonify, abort
 from api.v1.views import app_views
 from os import getenv
 from flask_cors import CORS
 from flask import request
+
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
