@@ -4,6 +4,7 @@ Module to manage the API authentication.
 """
 from typing import List
 from flask import request
+from os import getenv
 
 
 class Auth():
