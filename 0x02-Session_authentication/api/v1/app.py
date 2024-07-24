@@ -23,6 +23,7 @@ elif auth_type == "basic_auth":
 elif auth_type == "user_auth":
     auth = UserAuth()
 
+
 @app.before_request
 def before_request():
     """ Before request handler
@@ -37,11 +38,13 @@ def before_request():
                auth.session_cookie(request) is None:
                 abort(401)
 
+
 @app.errorhandler(404)
 def not_found(error):
     """ Not found handler
     """
     return jsonify({"error": "Not found"}), 404
+
 
 @app.errorhandler(401)
 def unauthorized(error):
@@ -49,11 +52,13 @@ def unauthorized(error):
     """
     return jsonify({"error": "Unauthorized"}), 401
 
+
 @app.errorhandler(403)
 def forbidden(error):
     """ Forbidden handler
     """
     return jsonify({"error": "Forbidden"}), 403
+
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
